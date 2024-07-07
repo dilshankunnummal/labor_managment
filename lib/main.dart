@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
         '/workerLogin': (context) => WorkerLogin(),
         '/workerHome': (context) => WorkerHome(),
         '/userLogin': (context) => UserLogin(),
-        '/dashBoard': (context) => DashBoard()
+        '/dashBoard': (context) => DashBoard(),
         '/userRegistration': (context) => UserRegistration(),
       },
       theme: ThemeData(
