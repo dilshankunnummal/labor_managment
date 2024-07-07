@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/dash_board.dart';
 import 'package:labor_managment/user/user_login.dart';
+import 'package:labor_managment/user/user_registration.dart';
 import 'package:labor_managment/worker/worker_home.dart';
 import 'package:labor_managment/worker/worker_login.dart';
 import 'package:labor_managment/worker/worker_registration.dart';
@@ -29,6 +30,7 @@ class _MyAppState extends State<MyApp> {
         '/workerHome': (context) => WorkerHome(),
         '/userLogin': (context) => UserLogin(),
         '/dashBoard': (context) => DashBoard()
+        '/userRegistration': (context) => UserRegistration(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: ash),
