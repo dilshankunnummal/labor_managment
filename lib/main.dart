@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
+import 'package:labor_managment/dash_board.dart';
+import 'package:labor_managment/user/user_login.dart';
 import 'package:labor_managment/worker/worker_home.dart';
 import 'package:labor_managment/worker/worker_login.dart';
 import 'package:labor_managment/worker/worker_registration.dart';
@@ -20,11 +22,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/workerLogin',
+      initialRoute: '/dashBoard',
       routes: {
         '/workerRegistration': (context) => WorkerRegistration(),
         '/workerLogin': (context) => WorkerLogin(),
-        '/workerHome': (context) => WorkerHome()
+        '/workerHome': (context) => WorkerHome(),
+        '/userLogin': (context) => UserLogin(),
+        '/dashBoard': (context) => DashBoard()
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: ash),
