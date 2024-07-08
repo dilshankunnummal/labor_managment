@@ -194,5 +194,4 @@ class _CategoriesListState extends State<UserHome> {
         ),
       ),
     );
-  }
-}
+

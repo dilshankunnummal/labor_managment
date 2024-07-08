@@ -8,7 +8,7 @@ class UserModel {
       {required this.uid,
         required this.userName,
         required this.email,
-        required this.password});
+        this.password});
 
   // receiving data from server
 
