@@ -27,7 +27,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       initialRoute: '/userRegistration',
+
       routes: {
         '/workerRegistration': (context) => WorkerRegistration(),
         '/workerLogin': (context) => WorkerLogin(),
@@ -35,7 +37,8 @@ class _MyAppState extends State<MyApp> {
         '/userLogin': (context) => UserLogin(),
         '/dashBoard': (context) => DashBoard(),
         '/userRegistration': (context) => UserRegistration(),
-        '/userHome' : (context) => UserHome()
+        '/userHome': (context) => UserHome()
+
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: ash),

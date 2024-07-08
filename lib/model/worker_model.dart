@@ -1,4 +1,3 @@
-
 class WorkerModel {
   String? uid;
   String? userName;
@@ -10,7 +9,6 @@ class WorkerModel {
   // Define the jobTypes list
   static final List<String> jobTypes = [
     "Painter",
-    "Gardening",
     "Babysitting",
     "Plumbing",
     "House Cleaning",
@@ -21,7 +19,6 @@ class WorkerModel {
   ];
 
   WorkerModel({
-
     required this.uid,
     required this.userName,
     required this.email,
@@ -30,10 +27,8 @@ class WorkerModel {
     this.experience,
   });
 
-
   factory WorkerModel.fromJson(Map<String, dynamic> json) {
     return WorkerModel(
-
       uid: json['uid'] ?? '',
       userName: json['userName'] ?? '',
       email: json['email'] ?? '',
