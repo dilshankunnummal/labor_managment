@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:labor_managment/constants/colors.dart';
 
 class Workerslistpage extends StatefulWidget {
   const Workerslistpage({super.key});
@@ -20,18 +21,17 @@ class _WorkerslistpageState extends State<Workerslistpage> {
     args = ModalRoute.of(context)!.settings.arguments as Map?;
   }
 
-  // final args = ModalRoute.of(context)!.settings.arguments as Map?;
-
   @override
   Widget build(BuildContext context) {
     String? jobCategory = args?['jobCategory'];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Workers List of $jobCategory'),
+        title: Text('Staff List of $jobCategory',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
       ),
       body: StreamBuilder(
-        stream: workers.where(jobCategory!).snapshots(),
+        stream: workers.where('jobType', isEqualTo: jobCategory).snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -42,19 +42,54 @@ class _WorkerslistpageState extends State<Workerslistpage> {
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No trips available'));
+            return const Center(child: Text('No workers available'));
           }
 
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              var labour = snapshot.data!.docs[index];
-              String name = labour['userName'] ?? 'N/A';
-              String experience = labour['experience'].toString() ?? 'N/A';
+              var worker = snapshot.data!.docs[index];
+              String name = worker['userName'] ?? 'N/A';
+              String experience = worker['experience'].toString() ?? 'N/A';
+              String email = worker['email'] ?? 'N/A';
 
-              return Container(
-                child: Column(
-                  children: [Text(name), Text(experience)],
+              return Card(
+                color: cardColor,
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        'Experience: $experience years',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: primaryColor,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        'Email: $email',
+                        style: TextStyle(
+                          fontFamily: email,
+                          fontSize: 16,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

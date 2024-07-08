@@ -6,3 +6,4 @@ const Color black = Colors.black;
 const Color buttonColor = Color(0xFF087F8F);
 const Color ash = Color(0xFF787171);
 const Color blue = Colors.lightBlue;
+const Color cardColor = Color(0xFF066A75);
