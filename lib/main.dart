@@ -23,7 +23,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/workerHome',
+<<<<<<< HEAD
+      initialRoute: '/userRegistration',
+=======
+
+      initialRoute: '/workerRegistration',
+>>>>>>> b1d7e2e76214bf0dbf77f1db3096030a71b2a9fd
       routes: {
         '/workerRegistration': (context) => WorkerRegistration(),
         '/workerLogin': (context) => WorkerLogin(),
