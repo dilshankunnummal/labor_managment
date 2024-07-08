@@ -116,7 +116,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/workerLogin');
+                          Navigator.pushNamed(context, '/userLogin');
                         },
                         child: const Text(
                           'Sign In',

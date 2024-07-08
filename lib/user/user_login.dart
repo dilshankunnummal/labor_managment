@@ -40,7 +40,7 @@ class _UserLoginState extends State<UserLogin> {
             child: Container(
               padding: EdgeInsets.all(24),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: SingleChildScrollView(
                   child: Form(
                     key: _formKey,
@@ -74,13 +74,14 @@ class _UserLoginState extends State<UserLogin> {
                         const SizedBox(height: 24),
                         CustomElevatedButton(
                             onPressed: () {
-                              signIn(emailTextController.text,
+                              signIn(
+                                  emailTextController.text,
                                   passwordTextController.text);
                             },
                             buttonText: 'Login'),
                         const SizedBox(height: 34.0),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text('Dont have an accout yet ?'),
                             SizedBox(width: 6),
