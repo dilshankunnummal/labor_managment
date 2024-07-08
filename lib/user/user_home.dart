@@ -50,7 +50,7 @@ class _CategoriesListState extends State<UserHome> {
                 ),
                 autofocus: true,
                 style: const TextStyle(
-                    fontSize: 16, letterSpacing: 1, color: Colors.black),
+                    fontSize: 16, letterSpacing: 1, color: black),
                 onChanged: (val) {
                   _searchList = WorkerModel.jobTypes
                       .where((job) =>
@@ -62,17 +62,17 @@ class _CategoriesListState extends State<UserHome> {
             : const Text(
                 'Search',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: black,
                 ),
               ),
-        backgroundColor: Colors.white, // Assuming primaryColor is blue
+        backgroundColor: primaryColor,
         actions: [
           IconButton(
             icon: Icon(
               _isSearching ? Icons.cancel : Icons.search,
-              color: Colors.black,
+              color: black,
             ),
             onPressed: () {
               setState(() {
@@ -87,20 +87,10 @@ class _CategoriesListState extends State<UserHome> {
       ),
       drawer: const DrawerUser(),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.white, // Assuming primaryColor is blue
-              Colors.lightBlueAccent, // Assuming secondaryColor is light blue
-            ],
-          ),
-        ),
         child: ListView(
           children: <Widget>[
             const Card(
-              color: Colors.white, // Assuming primaryColor is blue
+              color: buttonColor, // Assuming primaryColor is blue
               child: Center(
                   // child: CarouselSlider(
                   //   items: imageList
@@ -156,7 +146,7 @@ class _CategoriesListState extends State<UserHome> {
                       : WorkerModel.jobTypes[index];
                   final icon = _jobTypeIcons[index % _jobTypeIcons.length];
                   return Card(
-                    color: Colors.white, // Assuming primaryColor is blue
+                    color: Color(0xFF066A75),
                     elevation: 4.0,
                     margin: const EdgeInsets.all(8.0),
                     child: Column(
@@ -170,12 +160,14 @@ class _CategoriesListState extends State<UserHome> {
                               Icon(
                                 icon,
                                 size: 70,
-                                color: Colors.black,
+                                color: primaryColor,
                               ),
                             ],
                           ),
                           title: Text(jobType,
-                              style: TextStyle(color: Colors.black)),
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold)),
                           onTap: () {
                             _handleCategoryTap(jobType);
                           },
