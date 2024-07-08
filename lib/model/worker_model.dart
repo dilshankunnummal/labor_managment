@@ -1,4 +1,4 @@
-class ServantModel {
+class WorkerModel {
   String? uid;
   String? userName;
   String? email;
@@ -19,7 +19,7 @@ class ServantModel {
     "Home Security",
   ];
 
-  ServantModel({
+  WorkerModel({
     required this.uid,
     required this.userName,
     required this.email,
@@ -28,8 +28,8 @@ class ServantModel {
     this.experience,
   });
 
-  factory ServantModel.fromJson(Map<String, dynamic> json) {
-    return ServantModel(
+  factory WorkerModel.fromJson(Map<String, dynamic> json) {
+    return WorkerModel(
       uid: json['uid'] ?? '',
       userName: json['userName'] ?? '',
       email: json['email'] ?? '',

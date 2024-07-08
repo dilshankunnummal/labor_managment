@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/model/worker_model.dart';
 import 'package:labor_managment/widget/button.dart';
@@ -19,6 +22,7 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
   final _formKey = GlobalKey<FormState>();
   String? errorMessage;
   String? _selectedJobType;
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +98,7 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                               _selectedJobType = newValue;
                             });
                           },
-                          items: ServantModel.jobTypes.map((jobType) {
+                          items: WorkerModel.jobTypes.map((jobType) {
                             return DropdownMenuItem<String>(
                               value: jobType,
                               child: Text(jobType),
@@ -134,7 +138,13 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: CustomElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/workerHome');
+                          signUp(
+                            _emailController.text,
+                            _nameController.text,
+                            _passwordController.text,
+                            _selectedJobType.toString(),
+                            int.parse(_experienceController.text),
+                          );
                         },
                         buttonText: 'Sign UP'),
                   ),
@@ -174,5 +184,73 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
         ),
       ),
     );
+  }
+
+  void signUp(String email, String username, String password, String jobType,
+      int experience) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) {
+          postDetailsToFirestore(
+              email, username, password, jobType, experience);
+        }).catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+      }
+    }
+  }
+
+  Future<void> postDetailsToFirestore(
+    String email,
+    String username,
+    String password,
+    String jobType,
+    int experience,
+  ) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    WorkerModel workerModel = WorkerModel(
+      uid: user!.uid,
+      userName: username,
+      email: user.email,
+      password: password,
+      jobType: jobType,
+      experience: experience,
+    );
+
+    await firebaseFirestore
+        .collection("workers")
+        .doc(user.uid)
+        .set(workerModel.toMap());
+
+    Fluttertoast.showToast(msg: "Account created successfully :) ");
+    Navigator.pushNamed(context, '/workerHome');
   }
 }
