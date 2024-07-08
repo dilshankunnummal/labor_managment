@@ -27,8 +27,10 @@ class _WorkerslistpageState extends State<Workerslistpage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Staff List of $jobCategory',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+        title: Text(
+          'Staff List of $jobCategory',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+        ),
       ),
       body: StreamBuilder(
         stream: workers.where('jobType', isEqualTo: jobCategory).snapshots(),
@@ -71,19 +73,41 @@ class _WorkerslistpageState extends State<Workerslistpage> {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      Text(
-                        'Experience: $experience years',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: primaryColor,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            'Experience: $experience years',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: primaryColor,
+                            ),
+                          ),
+                          SizedBox(width: 70),
+                          Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/bookingPage');
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: primaryColor, // Button color
+                                ),
+                                child: Text(
+                                  'Continue',
+                                  style: TextStyle(
+                                      color: cardColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 5),
                       Text(
                         'Email: $email',
                         style: TextStyle(
-                          fontFamily: email,
                           fontSize: 16,
                           color: primaryColor,
                         ),

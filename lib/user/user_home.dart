@@ -15,13 +15,6 @@ class _CategoriesListState extends State<UserHome> {
   bool _isSearching = false;
   List<String> _searchList = [];
 
-  // final CarouselController carouselController = CarouselController();
-  int currentIndex = 0;
-  List imageList = [
-    {"id": 1, "image_path": 'assets/images/clean.jpg'},
-    {"id": 2, "image_path": 'assets/images/electrician.jpg'},
-    {"id": 3, "image_path": 'assets/images/plumber.jpg'},
-  ];
   final List<IconData> _jobTypeIcons = [
     Icons.format_paint,
     Icons.child_care,
@@ -50,7 +43,10 @@ class _CategoriesListState extends State<UserHome> {
                 ),
                 autofocus: true,
                 style: const TextStyle(
-                    fontSize: 16, letterSpacing: 1, color: black),
+                    fontSize: 16,
+                    letterSpacing: 1,
+                    color: black,
+                    fontWeight: FontWeight.bold),
                 onChanged: (val) {
                   _searchList = WorkerModel.jobTypes
                       .where((job) =>
@@ -89,46 +85,6 @@ class _CategoriesListState extends State<UserHome> {
       body: Container(
         child: ListView(
           children: <Widget>[
-            const Card(
-              color: buttonColor, // Assuming primaryColor is blue
-              child: Center(
-                  // child: CarouselSlider(
-                  //   items: imageList
-                  //       .map(
-                  //         (item) => Padding(
-                  //           padding: const EdgeInsets.all(8.0),
-                  //           child: Material(
-                  //             shadowColor: Colors.black,
-                  //             elevation: 2,
-                  //             borderRadius: BorderRadius.circular(10),
-                  //             child: Container(
-                  //               decoration: BoxDecoration(
-                  //                 borderRadius: BorderRadius.circular(10),
-                  //                 image: DecorationImage(
-                  //                   image: AssetImage(item['image_path']),
-                  //                   fit: BoxFit.fill,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       )
-                  //       .toList(),
-                  //   carouselController: carouselController,
-                  //   options: CarouselOptions(
-                  //     scrollPhysics: const BouncingScrollPhysics(),
-                  //     autoPlay: true,
-                  //     aspectRatio: 1.6,
-                  //     viewportFraction: 1,
-                  //     onPageChanged: (index, reason) {
-                  //       setState(() {
-                  //         currentIndex = index;
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
-                  ),
-            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(
