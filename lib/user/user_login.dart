@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:labor_managment/components/user_drawer.dart';
 import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/widget/button.dart';
@@ -15,12 +17,25 @@ class _UserLoginState extends State<UserLogin> {
   TextEditingController passwordTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  void signIn(String email, String password) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      Fluttertoast.showToast(msg: "Login Successful");
+      Navigator.pushNamed(
+          context, '/userHome'); // Redirect to home page after login
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: e.message ?? "An error occurred");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        Padding(
+      body: Stack(
+        children: [
+          Padding(
             padding: const EdgeInsets.only(top: 200.0),
             child: Container(
               padding: EdgeInsets.all(24),
@@ -56,9 +71,13 @@ class _UserLoginState extends State<UserLogin> {
                           controller: passwordTextController,
                           obscureText: true,
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         CustomElevatedButton(
-                            onPressed: () {}, buttonText: 'Login'),
+                            onPressed: () {
+                              signIn(emailTextController.text,
+                                  passwordTextController.text);
+                            },
+                            buttonText: 'Login'),
                         const SizedBox(height: 34.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -81,8 +100,10 @@ class _UserLoginState extends State<UserLogin> {
                   ),
                 ),
               ),
-            ))
-      ]),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
