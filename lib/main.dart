@@ -5,6 +5,7 @@ import 'package:labor_managment/dash_board.dart';
 import 'package:labor_managment/user/user_home.dart';
 import 'package:labor_managment/user/user_login.dart';
 import 'package:labor_managment/user/user_registration.dart';
+import 'package:labor_managment/user/workers_list_page.dart';
 import 'package:labor_managment/worker/worker_home.dart';
 import 'package:labor_managment/worker/worker_login.dart';
 import 'package:labor_managment/worker/worker_registration.dart';
@@ -28,7 +29,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      initialRoute: '/userRegistration',
+      initialRoute: '/userHome',
 
       routes: {
         '/workerRegistration': (context) => WorkerRegistration(),
@@ -37,7 +38,8 @@ class _MyAppState extends State<MyApp> {
         '/userLogin': (context) => UserLogin(),
         '/dashBoard': (context) => DashBoard(),
         '/userRegistration': (context) => UserRegistration(),
-        '/userHome': (context) => UserHome()
+        '/userHome': (context) => UserHome(),
+        '/workersList': (context)=> Workerslistpage()
 
       },
       theme: ThemeData(

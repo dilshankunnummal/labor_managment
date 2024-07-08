@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:labor_managment/components/user_drawer.dart';
 import 'package:labor_managment/model/worker_model.dart';
+import 'package:labor_managment/user/workers_list_page.dart';
 import 'package:labor_managment/worker/worker_details_page.dart';
 
 class UserHome extends StatefulWidget {
@@ -13,7 +14,8 @@ class UserHome extends StatefulWidget {
 class _CategoriesListState extends State<UserHome> {
   bool _isSearching = false;
   List<String> _searchList = [];
-  final CarouselController carouselController = CarouselController();
+
+  // final CarouselController carouselController = CarouselController();
   int currentIndex = 0;
   List imageList = [
     {"id": 1, "image_path": 'assets/images/clean.jpg'},
@@ -34,11 +36,8 @@ class _CategoriesListState extends State<UserHome> {
   @override
   Widget build(BuildContext context) {
     void _handleCategoryTap(String selectedCategory) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => WorkerList(jobType: selectedCategory),
-        ),
-      );
+      Navigator.pushNamed(context, '/workersList',
+          arguments: {'jobCategory': selectedCategory});
     }
 
     return Scaffold(
@@ -100,45 +99,45 @@ class _CategoriesListState extends State<UserHome> {
         ),
         child: ListView(
           children: <Widget>[
-            Card(
+            const Card(
               color: Colors.white, // Assuming primaryColor is blue
               child: Center(
-                child: CarouselSlider(
-                  items: imageList
-                      .map(
-                        (item) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Material(
-                            shadowColor: Colors.black,
-                            elevation: 2,
-                            borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: AssetImage(item['image_path']),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  carouselController: carouselController,
-                  options: CarouselOptions(
-                    scrollPhysics: const BouncingScrollPhysics(),
-                    autoPlay: true,
-                    aspectRatio: 1.6,
-                    viewportFraction: 1,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                    },
+                  // child: CarouselSlider(
+                  //   items: imageList
+                  //       .map(
+                  //         (item) => Padding(
+                  //           padding: const EdgeInsets.all(8.0),
+                  //           child: Material(
+                  //             shadowColor: Colors.black,
+                  //             elevation: 2,
+                  //             borderRadius: BorderRadius.circular(10),
+                  //             child: Container(
+                  //               decoration: BoxDecoration(
+                  //                 borderRadius: BorderRadius.circular(10),
+                  //                 image: DecorationImage(
+                  //                   image: AssetImage(item['image_path']),
+                  //                   fit: BoxFit.fill,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       )
+                  //       .toList(),
+                  //   carouselController: carouselController,
+                  //   options: CarouselOptions(
+                  //     scrollPhysics: const BouncingScrollPhysics(),
+                  //     autoPlay: true,
+                  //     aspectRatio: 1.6,
+                  //     viewportFraction: 1,
+                  //     onPageChanged: (index, reason) {
+                  //       setState(() {
+                  //         currentIndex = index;
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
                   ),
-                ),
-              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
