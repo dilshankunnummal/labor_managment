@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 class WorkerModel {
-=======
-class ServantModel {
->>>>>>> b1d7e2e76214bf0dbf77f1db3096030a71b2a9fd
   String? uid;
   String? userName;
   String? email;
@@ -23,11 +20,8 @@ class ServantModel {
     "Home Security",
   ];
 
-<<<<<<< HEAD
   WorkerModel({
-=======
-  ServantModel({
->>>>>>> b1d7e2e76214bf0dbf77f1db3096030a71b2a9fd
+
     required this.uid,
     required this.userName,
     required this.email,
@@ -36,13 +30,10 @@ class ServantModel {
     this.experience,
   });
 
-<<<<<<< HEAD
+
   factory WorkerModel.fromJson(Map<String, dynamic> json) {
     return WorkerModel(
-=======
-  factory ServantModel.fromJson(Map<String, dynamic> json) {
-    return ServantModel(
->>>>>>> b1d7e2e76214bf0dbf77f1db3096030a71b2a9fd
+
       uid: json['uid'] ?? '',
       userName: json['userName'] ?? '',
       email: json['email'] ?? '',

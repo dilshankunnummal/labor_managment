@@ -98,11 +98,9 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                               _selectedJobType = newValue;
                             });
                           },
-<<<<<<< HEAD
+
                           items: WorkerModel.jobTypes.map((jobType) {
-=======
-                          items: ServantModel.jobTypes.map((jobType) {
->>>>>>> b1d7e2e76214bf0dbf77f1db3096030a71b2a9fd
+
                             return DropdownMenuItem<String>(
                               value: jobType,
                               child: Text(jobType),
@@ -141,17 +139,37 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: CustomElevatedButton(
-                        onPressed: () {
-                          signUp(
-                            _emailController.text,
-                            _nameController.text,
-                            _passwordController.text,
-                            _selectedJobType.toString(),
-                            int.parse(_experienceController.text),
-                          );
-                        },
-                        buttonText: 'Sign UP'),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          String email = _emailController.text.trim();
+                          String name = _nameController.text.trim();
+                          String password = _passwordController.text.trim();
+                          String jobType = _selectedJobType ?? '';
+                          String experienceText = _experienceController.text.trim();
+
+                          // Print statements for debugging
+                          print('Email: $email');
+                          print('Name: $name');
+                          print('Password: $password');
+                          print('Job Type: $jobType');
+                          print('Experience: $experienceText');
+
+                          if (experienceText.isNotEmpty && int.tryParse(experienceText) != null) {
+                            int experience = int.parse(experienceText);
+
+                            // Print experience
+                            print('Parsed Experience: $experience');
+
+                            signUp(email, name, password, jobType, experience);
+                          } else {
+                            Fluttertoast.showToast(msg: 'Please enter a valid number for experience.');
+                          }
+                        }
+                      },
+                      buttonText: 'Sign UP',
+                    ),
                   ),
+
                   const SizedBox(
                     height: 25,
                   ),

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/dash_board.dart';
@@ -7,7 +8,9 @@ import 'package:labor_managment/worker/worker_home.dart';
 import 'package:labor_managment/worker/worker_login.dart';
 import 'package:labor_managment/worker/worker_registration.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -23,12 +26,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
-      initialRoute: '/userRegistration',
-=======
-
       initialRoute: '/workerRegistration',
->>>>>>> b1d7e2e76214bf0dbf77f1db3096030a71b2a9fd
       routes: {
         '/workerRegistration': (context) => WorkerRegistration(),
         '/workerLogin': (context) => WorkerLogin(),
