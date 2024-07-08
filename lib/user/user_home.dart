@@ -19,15 +19,19 @@ class _CategoriesListState extends State<UserHome> {
   final CarouselController carouselController = CarouselController();
   int currentIndex = 0;
   List imageList = [
-    {"id": 1, "image_path": 'assets/images/img1.jpg'},
-    {"id": 2, "image_path": 'assets/images/img2.jpg'},
-    {"id": 3, "image_path": 'assets/images/img3.jpg'}
+    {"id": 1, "image_path": 'assets/images/clean.jpg'},
+    {"id": 2, "image_path": 'assets/images/electrician.jpg'},
+    {"id": 3, "image_path": 'assets/images/plumber.jpg'},
   ];
   final List<IconData> _jobTypeIcons = [
-    Icons.cookie_outlined,
-    Icons.home,
-    Icons.pets,
-    Icons.face
+    Icons.format_paint, // Painter
+    Icons.child_care, // Babysitting
+    Icons.plumbing, // Plumbing
+    Icons.cleaning_services, // House Cleaning
+    Icons.restaurant, // Personal Chef
+    Icons.electrical_services, // Electrician
+    Icons.fitness_center, // Personal Trainer
+    Icons.security // Home Security
   ];
 
   @override
@@ -50,7 +54,7 @@ class _CategoriesListState extends State<UserHome> {
                 ),
                 autofocus: true,
                 style: const TextStyle(
-                    fontSize: 16, letterSpacing: 1, color: black),
+                    fontSize: 16, letterSpacing: 1, color: Colors.black),
                 onChanged: (val) {
                   _searchList = WorkerModel.jobTypes
                       .where((job) =>
@@ -64,14 +68,16 @@ class _CategoriesListState extends State<UserHome> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: black,
+                  color: Colors.black,
                 ),
               ),
-        backgroundColor: primaryColor,
+        backgroundColor: Colors.white, // Assuming primaryColor is blue
         actions: [
           IconButton(
-            icon:
-                Icon(_isSearching ? Icons.cancel : Icons.search, color: black),
+            icon: Icon(
+              _isSearching ? Icons.cancel : Icons.search,
+              color: Colors.black,
+            ),
             onPressed: () {
               setState(() {
                 _isSearching = !_isSearching;
@@ -90,15 +96,15 @@ class _CategoriesListState extends State<UserHome> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              primaryColor,
-              secondaryColor,
+              Colors.white, // Assuming primaryColor is blue
+              Colors.lightBlueAccent, // Assuming secondaryColor is light blue
             ],
           ),
         ),
         child: ListView(
           children: <Widget>[
             Card(
-              color: primaryColor,
+              color: Colors.white, // Assuming primaryColor is blue
               child: Center(
                 child: CarouselSlider(
                   items: imageList
@@ -106,7 +112,7 @@ class _CategoriesListState extends State<UserHome> {
                         (item) => Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Material(
-                            shadowColor: black,
+                            shadowColor: Colors.black,
                             elevation: 2,
                             borderRadius: BorderRadius.circular(10),
                             child: Container(
@@ -154,7 +160,7 @@ class _CategoriesListState extends State<UserHome> {
                       : WorkerModel.jobTypes[index];
                   final icon = _jobTypeIcons[index % _jobTypeIcons.length];
                   return Card(
-                    color: primaryColor,
+                    color: Colors.white, // Assuming primaryColor is blue
                     elevation: 4.0,
                     margin: const EdgeInsets.all(8.0),
                     child: Column(
@@ -168,11 +174,12 @@ class _CategoriesListState extends State<UserHome> {
                               Icon(
                                 icon,
                                 size: 70,
-                                color: black,
+                                color: Colors.black,
                               ),
                             ],
                           ),
-                          title: Text(jobType, style: TextStyle(color: black)),
+                          title: Text(jobType,
+                              style: TextStyle(color: Colors.black)),
                           onTap: () {
                             _handleCategoryTap(jobType);
                           },
