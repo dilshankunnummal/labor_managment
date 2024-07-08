@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
+import 'package:labor_managment/model/worker_model.dart';
 import 'package:labor_managment/widget/button.dart';
 import 'package:labor_managment/widget/textfield.dart';
 
@@ -93,7 +94,12 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                               _selectedJobType = newValue;
                             });
                           },
-                          items: [],
+                          items: ServantModel.jobTypes.map((jobType) {
+                            return DropdownMenuItem<String>(
+                              value: jobType,
+                              child: Text(jobType),
+                            );
+                          }).toList(),
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.build),
                             border: InputBorder.none,
