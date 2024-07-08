@@ -98,7 +98,11 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                               _selectedJobType = newValue;
                             });
                           },
+<<<<<<< HEAD
                           items: WorkerModel.jobTypes.map((jobType) {
+=======
+                          items: ServantModel.jobTypes.map((jobType) {
+>>>>>>> b1d7e2e76214bf0dbf77f1db3096030a71b2a9fd
                             return DropdownMenuItem<String>(
                               value: jobType,
                               child: Text(jobType),
