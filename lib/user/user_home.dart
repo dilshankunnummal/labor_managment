@@ -24,14 +24,14 @@ class _CategoriesListState extends State<UserHome> {
     {"id": 3, "image_path": 'assets/images/plumber.jpg'},
   ];
   final List<IconData> _jobTypeIcons = [
-    Icons.format_paint, // Painter
-    Icons.child_care, // Babysitting
-    Icons.plumbing, // Plumbing
-    Icons.cleaning_services, // House Cleaning
-    Icons.restaurant, // Personal Chef
-    Icons.electrical_services, // Electrician
-    Icons.fitness_center, // Personal Trainer
-    Icons.security // Home Security
+    Icons.format_paint,
+    Icons.child_care,
+    Icons.plumbing,
+    Icons.cleaning_services,
+    Icons.restaurant,
+    Icons.electrical_services,
+    Icons.fitness_center,
+    Icons.security
   ];
 
   @override
