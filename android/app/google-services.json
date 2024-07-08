@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "325064629125",
+    "project_id": "labour-managment-cf247",
+    "storage_bucket": "labour-managment-cf247.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325064629125:android:42d223a740af0f5fa782ec",
+        "android_client_info": {
+          "package_name": "com.example.labor_managment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhnu1K0USbhPdk9MlY8BAwvsTFlGoHZPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
