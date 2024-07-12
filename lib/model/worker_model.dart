@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class WorkerModel {
   String? uid;
   String? userName;
@@ -50,4 +52,6 @@ class WorkerModel {
   }
 
   Map<String, dynamic> toJson() => toMap();
+
+  static fromSnapshot(QueryDocumentSnapshot<Object?> doc) {}
 }

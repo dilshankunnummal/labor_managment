@@ -88,8 +88,6 @@ class _BookingPageState extends State<BookingPage> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Implement booking logic here
-                  // Example: Save selectedDate and selectedTime to Firebase or process booking
                   Navigator.pop(
                       context); // Return to previous page after booking
                 },
