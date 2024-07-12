@@ -1,31 +1,67 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:labor_managment/constants/colors.dart';
 
-class WorkerHome extends StatefulWidget {
-  const WorkerHome({Key? key}) : super(key: key);
+class WorkerProfile extends StatefulWidget {
+  const WorkerProfile({Key? key}) : super(key: key);
 
   @override
-  _ServantDetailsPageState createState() => _ServantDetailsPageState();
+  _WorkerProfileState createState() => _WorkerProfileState();
 }
 
-class _ServantDetailsPageState extends State<WorkerHome> {
+class _WorkerProfileState extends State<WorkerProfile> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String username = '';
-  String email = '';
-  String jobType = '';
-  int experience = 0;
+  late String username = '';
+  late String email = '';
+  late String jobType = '';
+  late int experience = 0;
+
+  Future<void> fetchWorkerDetails() async {
+    try {
+      // Get the current user from Firebase Authentication
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        // User is signed in, get the UID
+        String currentUserUid = user.uid;
+
+        // Use currentUserUid to fetch user details from Firestore
+        DocumentSnapshot workerSnapshot = await FirebaseFirestore.instance
+            .collection('workers')
+            .doc(currentUserUid)
+            .get();
+
+        if (workerSnapshot.exists) {
+          setState(() {
+            username = workerSnapshot['userName'] ?? '';
+            email = workerSnapshot['email'] ?? '';
+            jobType = workerSnapshot['jobType'] ?? '';
+            experience = workerSnapshot['experience'] ?? 0;
+          });
+        } else {
+          print('Worker document does not exist for UID: $currentUserUid');
+        }
+      } else {
+        // No user is signed in
+        print('No worker signed in');
+      }
+    } catch (e) {
+      print('Error fetching worker details: $e');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    fetchWorkerDetails();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Servant Profile',
+        title: const Text('Worker Profile',
             style: TextStyle(fontWeight: FontWeight.bold, color: black)),
         centerTitle: true,
         backgroundColor: primaryColor,
@@ -46,10 +82,10 @@ class _ServantDetailsPageState extends State<WorkerHome> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(width: 2, color: black),
-                  image: const DecorationImage(
-                    image: AssetImage('assets/default_profile.png'),
-                    fit: BoxFit.cover,
-                  ),
+                  // image: const DecorationImage(
+                  //   // image: AssetImage('assets/default_profile.png'),
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
               ),
             ),
@@ -112,7 +148,7 @@ class _ServantDetailsPageState extends State<WorkerHome> {
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
-                //     builder: (context) => EditServantPage(), // Pass the necessary data to the editing page.
+                //     builder: (context) => EditWorkerPage(), // Pass the necessary data to the editing page.
                 //   ),
                 // );
               },

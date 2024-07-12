@@ -9,6 +9,7 @@ import 'package:labor_managment/user/user_registration.dart';
 import 'package:labor_managment/user/workers_list_page.dart';
 import 'package:labor_managment/worker/worker_home.dart';
 import 'package:labor_managment/worker/worker_login.dart';
+import 'package:labor_managment/worker/worker_profile.dart';
 import 'package:labor_managment/worker/worker_registration.dart';
 
 void main() async {
@@ -29,17 +30,23 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/userHome',
+
+      initialRoute: '/userLogin',
+
       routes: {
+        '/dashBoard': (context) => DashBoard(),
+        //user
+        '/userLogin': (context) => UserLogin(),
+        '/userRegistration': (context) => UserRegistration(),
+        '/userHome': (context) => UserHome(),
+
+        //worker
         '/workerRegistration': (context) => WorkerRegistration(),
         '/workerLogin': (context) => WorkerLogin(),
         '/workerHome': (context) => WorkerHome(),
-        '/userLogin': (context) => UserLogin(),
-        '/dashBoard': (context) => DashBoard(),
-        '/userRegistration': (context) => UserRegistration(),
-        '/userHome': (context) => UserHome(),
         '/workersList': (context) => Workerslistpage(),
-        '/bookingPage': (context) => BookingPage(),
+        '/workerProfile': (context) => WorkerProfile()
+
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: ash),
