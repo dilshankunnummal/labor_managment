@@ -66,10 +66,10 @@ class _WorkerLoginState extends State<WorkerLogin> {
     }
   }
 
-    void _showSnackbar(String message) {
-      final snackBar = SnackBar(content: Text(message));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+  void _showSnackbar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class _WorkerLoginState extends State<WorkerLogin> {
                         const Text(
                           'Login',
                           style: TextStyle(
-                              color: black,
+                              color: secondaryColor,
                               fontSize: 35,
                               fontWeight: FontWeight.bold),
                         ),
@@ -133,7 +133,10 @@ class _WorkerLoginState extends State<WorkerLogin> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Don't have an account yet?"),
+                            const Text(
+                              "Don't have an account yet ?",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
                             const SizedBox(width: 6),
                             GestureDetector(
                               onTap: () {
@@ -142,7 +145,8 @@ class _WorkerLoginState extends State<WorkerLogin> {
                               },
                               child: const Text(
                                 'Create',
-                                style: TextStyle(color: blue),
+                                style: TextStyle(
+                                    color: blue, fontWeight: FontWeight.w600),
                               ),
                             )
                           ],

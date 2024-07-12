@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
-import 'package:labor_managment/dash_board.dart';
-import 'package:labor_managment/user/booking_page.dart';
+import 'package:labor_managment/role_selection_page.dart';
+import 'package:labor_managment/splash_screen.dart';
 import 'package:labor_managment/user/user_home.dart';
 import 'package:labor_managment/user/user_login.dart';
 import 'package:labor_managment/user/user_registration.dart';
@@ -30,11 +30,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      initialRoute: '/userLogin',
-
+      initialRoute: '/',
       routes: {
-        '/dashBoard': (context) => DashBoard(),
+        '/': (context) => SplashScreen(),
+        '/roleSelection': (context) => RoleSelectionPage(),
         //user
         '/userLogin': (context) => UserLogin(),
         '/userRegistration': (context) => UserRegistration(),
@@ -46,16 +45,15 @@ class _MyAppState extends State<MyApp> {
         '/workerHome': (context) => WorkerHome(),
         '/workersList': (context) => Workerslistpage(),
         '/workerProfile': (context) => WorkerProfile()
-
       },
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: ash),
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(backgroundColor: Colors.white),
-        primarySwatch: Colors.blue,
-        brightness: Brightness.light,
-      ),
+          colorScheme: ColorScheme.fromSeed(seedColor: ash),
+          useMaterial3: true,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(backgroundColor: Colors.white),
+          primarySwatch: Colors.blue,
+          brightness: Brightness.light,
+          hintColor: Color(0xFF066A75)),
     );
   }
 }
