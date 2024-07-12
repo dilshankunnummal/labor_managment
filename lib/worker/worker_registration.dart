@@ -43,7 +43,7 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   ),
                   const SizedBox(
-                    height: 80,
+                    height: 44,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -55,7 +55,7 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -67,7 +67,7 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -79,7 +79,7 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -98,9 +98,7 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                               _selectedJobType = newValue;
                             });
                           },
-
                           items: WorkerModel.jobTypes.map((jobType) {
-
                             return DropdownMenuItem<String>(
                               value: jobType,
                               child: Text(jobType),
@@ -111,18 +109,18 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                             border: InputBorder.none,
                             hintText: 'Job Type',
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please select a job type';
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value == null || value.isEmpty) {
+                          //     return 'Please select a job type';
+                          //   }
+                          //   return null;
+                          // },
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -134,7 +132,7 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 32,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -145,7 +143,8 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                           String name = _nameController.text.trim();
                           String password = _passwordController.text.trim();
                           String jobType = _selectedJobType ?? '';
-                          String experienceText = _experienceController.text.trim();
+                          String experienceText =
+                              _experienceController.text.trim();
 
                           // Print statements for debugging
                           print('Email: $email');
@@ -154,7 +153,8 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
                           print('Job Type: $jobType');
                           print('Experience: $experienceText');
 
-                          if (experienceText.isNotEmpty && int.tryParse(experienceText) != null) {
+                          if (experienceText.isNotEmpty &&
+                              int.tryParse(experienceText) != null) {
                             int experience = int.parse(experienceText);
 
                             // Print experience
@@ -162,14 +162,15 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
 
                             signUp(email, name, password, jobType, experience);
                           } else {
-                            Fluttertoast.showToast(msg: 'Please enter a valid number for experience.');
+                            Fluttertoast.showToast(
+                                msg:
+                                    'Please enter a valid number for experience.');
                           }
                         }
                       },
                       buttonText: 'Sign UP',
                     ),
                   ),
-
                   const SizedBox(
                     height: 25,
                   ),
@@ -248,20 +249,15 @@ class _WorkerRegistrationState extends State<WorkerRegistration> {
     }
   }
 
-  Future<void> postDetailsToFirestore(
-    String email,
-    String username,
-    String password,
-    String jobType,
-    int experience,
-  ) async {
+  Future<void> postDetailsToFirestore(String email, String username,
+      String password, String jobType, int experience) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
 
     WorkerModel workerModel = WorkerModel(
       uid: user!.uid,
       userName: username,
-      email: user.email,
+      email: email,
       password: password,
       jobType: jobType,
       experience: experience,
