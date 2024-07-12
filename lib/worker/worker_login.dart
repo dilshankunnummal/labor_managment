@@ -55,7 +55,8 @@ class _WorkerLoginState extends State<WorkerLogin> {
         if (user != null) {
           print('Signed in successfully.');
           // Navigate to the worker dashboard or home screen
-          Navigator.pushNamed(context, '/workerProfile'); // Update with your actual route
+          Navigator.pushNamed(
+              context, '/workerProfile'); // Update with your actual route
         } else {
           _showSnackbar('Login failed. Please check your credentials.');
         }
@@ -65,10 +66,10 @@ class _WorkerLoginState extends State<WorkerLogin> {
     }
   }
 
-  void _showSnackbar(String message) {
-    final snackBar = SnackBar(content: Text(message));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+    void _showSnackbar(String message) {
+      final snackBar = SnackBar(content: Text(message));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
 
   @override
   Widget build(BuildContext context) {

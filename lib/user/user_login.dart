@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,15 +20,56 @@ class _UserLoginState extends State<UserLogin> {
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  void signIn(String email, String password) async {
+  Future<bool> checkUserExists(String email) async {
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
-      Fluttertoast.showToast(msg: "Login Successful");
-      Navigator.pushNamed(
-          context, '/userHome'); // Redirect to home page after login
-    } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: e.message ?? "An error occurred");
+      CollectionReference workers = FirebaseFirestore.instance.collection('users');
+      QuerySnapshot querySnapshot =
+      await workers.where('email', isEqualTo: email).get();
+      return querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print('Error checking worker existence: $e');
+      return false;
     }
+  }
+
+  Future<User?> signInWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return userCredential.user;
+    } catch (e) {
+      print('Error signing in: $e');
+      return null;
+    }
+  }
+
+  void signIn(String email, String password) async {
+    if (_formKey.currentState?.validate() ?? false) {
+      String email = emailTextController.text;
+      String password = passwordTextController.text;
+
+      bool userExists = await checkUserExists(email);
+
+      if (userExists) {
+        User? user = await signInWithEmailAndPassword(email, password);
+        if (user != null) {
+          print('Signed in successfully.');
+          // Navigate to the worker dashboard or home screen
+          Navigator.pushNamed(
+              context, '/userHome'); // Update with your actual route
+        } else {
+          _showSnackbar('Login failed. Please check your credentials.');
+        }
+      } else {
+        _showSnackbar('User does not exist.');
+      }
+    }
+  }
+
+  void _showSnackbar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -48,7 +90,7 @@ class _UserLoginState extends State<UserLogin> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Login',
                           style: TextStyle(
                               color: black,
@@ -83,14 +125,14 @@ class _UserLoginState extends State<UserLogin> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('Dont have an accout yet ?'),
-                            SizedBox(width: 6),
+                            const Text('Dont have an accout yet ?'),
+                            const SizedBox(width: 6),
                             GestureDetector(
                                 onTap: () {
                                   Navigator.pushNamed(
                                       context, '/userRegistration');
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Create',
                                   style: TextStyle(color: blue),
                                 ))
