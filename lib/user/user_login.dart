@@ -22,9 +22,10 @@ class _UserLoginState extends State<UserLogin> {
 
   Future<bool> checkUserExists(String email) async {
     try {
-      CollectionReference workers = FirebaseFirestore.instance.collection('users');
+      CollectionReference workers =
+          FirebaseFirestore.instance.collection('users');
       QuerySnapshot querySnapshot =
-      await workers.where('email', isEqualTo: email).get();
+          await workers.where('email', isEqualTo: email).get();
       return querySnapshot.docs.isNotEmpty;
     } catch (e) {
       print('Error checking worker existence: $e');
@@ -91,9 +92,9 @@ class _UserLoginState extends State<UserLogin> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Login',
+                          'Login ',
                           style: TextStyle(
-                              color: black,
+                              color: secondaryColor,
                               fontSize: 35,
                               fontWeight: FontWeight.bold),
                         ),
@@ -113,19 +114,21 @@ class _UserLoginState extends State<UserLogin> {
                           controller: passwordTextController,
                           obscureText: true,
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 34),
                         CustomElevatedButton(
                             onPressed: () {
-                              signIn(
-                                  emailTextController.text,
+                              signIn(emailTextController.text,
                                   passwordTextController.text);
                             },
                             buttonText: 'Login'),
-                        const SizedBox(height: 34.0),
+                        const SizedBox(height: 24.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Dont have an accout yet ?'),
+                            const Text(
+                              'Dont have an accout yet ?',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
                             const SizedBox(width: 6),
                             GestureDetector(
                                 onTap: () {
@@ -134,7 +137,8 @@ class _UserLoginState extends State<UserLogin> {
                                 },
                                 child: const Text(
                                   'Create',
-                                  style: TextStyle(color: blue),
+                                  style: TextStyle(
+                                      color: blue, fontWeight: FontWeight.bold),
                                 ))
                           ],
                         ),

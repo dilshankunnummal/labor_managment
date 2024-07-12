@@ -54,7 +54,7 @@ class _BookingPageState extends State<BookingPage> {
         ),
       ),
       body: Card(
-        color: cardColor,
+        color: secondaryColor,
         margin: EdgeInsets.fromLTRB(20, 60, 20, 20),
         elevation: 5,
         child: Container(
@@ -76,7 +76,7 @@ class _BookingPageState extends State<BookingPage> {
                 trailing: ElevatedButton(
                   onPressed: () => _selectDate(context),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: cardColor,
+                    foregroundColor: secondaryColor,
                     backgroundColor: Colors.white, // foreground color
                     textStyle: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -92,7 +92,7 @@ class _BookingPageState extends State<BookingPage> {
                       context); // Return to previous page after booking
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: cardColor,
+                  foregroundColor: secondaryColor,
                   backgroundColor: Colors.white, // foreground color
                   textStyle: TextStyle(
                     fontWeight: FontWeight.bold,

@@ -56,7 +56,7 @@ class _WorkerslistpageState extends State<Workerslistpage> {
               String email = worker['email'] ?? 'N/A';
 
               return Card(
-                color: cardColor,
+                color: secondaryColor,
                 margin:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 child: Padding(
@@ -96,7 +96,7 @@ class _WorkerslistpageState extends State<Workerslistpage> {
                                 child: Text(
                                   'Continue',
                                   style: TextStyle(
-                                      color: cardColor,
+                                      color: secondaryColor,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
