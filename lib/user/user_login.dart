@@ -6,6 +6,7 @@ import 'package:labor_managment/components/user_drawer.dart';
 import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/widget/button.dart';
 import 'package:labor_managment/widget/textfield.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({super.key});
@@ -19,6 +20,11 @@ class _UserLoginState extends State<UserLogin> {
   TextEditingController emailTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
+
+  void _saveAuthCredentialsUser(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isAuthUser', value);
+  }
 
   Future<bool> checkUserExists(String email) async {
     try {
@@ -57,8 +63,9 @@ class _UserLoginState extends State<UserLogin> {
         if (user != null) {
           print('Signed in successfully.');
           // Navigate to the worker dashboard or home screen
-          Navigator.pushNamed(
-              context, '/userHome'); // Update with your actual route
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/userDashboard',(route)=> false);
+          _saveAuthCredentialsUser(true);
         } else {
           _showSnackbar('Login failed. Please check your credentials.');
         }
