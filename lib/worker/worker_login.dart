@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/widget/button.dart';
 import 'package:labor_managment/widget/textfield.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WorkerLogin extends StatefulWidget {
   const WorkerLogin({super.key});
@@ -18,6 +19,11 @@ class _WorkerLoginState extends State<WorkerLogin> {
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  void _saveAuthCredentialsWorker(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isAuthWorker', value);
+  }
 
   Future<bool> checkWorkerExists(String email) async {
     try {
@@ -55,8 +61,10 @@ class _WorkerLoginState extends State<WorkerLogin> {
         if (user != null) {
           print('Signed in successfully.');
           // Navigate to the worker dashboard or home screen
-          Navigator.pushNamed(
-              context, '/workerProfile'); // Update with your actual route
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/workerProfile',(route)=> false);
+          _showSnackbar('Signed in successfully., Welcome....');
+          _saveAuthCredentialsWorker(true);// Update with your actual route
         } else {
           _showSnackbar('Login failed. Please check your credentials.');
         }

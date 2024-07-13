@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,19 +12,34 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _navigateToHome();
+    _checkAuthStatus();
   }
 
   _navigateToHome() async {
     // Delay for 2 seconds
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 6));
 
     // Navigate to role selection page
     Navigator.pushReplacementNamed(context, '/roleSelection');
   }
 
+
+  Future<void> _checkAuthStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isAuthUser = prefs.getBool('isAuthUser') ?? false;
+    final isAuthWorker = prefs.getBool('isAuthWorker') ?? false;
+
+    if (isAuthUser) {
+      Navigator.pushNamedAndRemoveUntil(context, '/userDashboard', (route)=> false);
+    }else if(isAuthWorker){
+      Navigator.pushNamedAndRemoveUntil(context, '/workerProfile', (route)=> false);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(context, '/roleSelection', (route)=> false);
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: primaryColor,
       body: Center(
         child: Column(
