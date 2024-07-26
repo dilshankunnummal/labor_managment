@@ -86,7 +86,7 @@ class RoleSelectionCard extends StatelessWidget {
               size: 48,
               color: Theme.of(context).hintColor,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               role,
               style: TextStyle(
