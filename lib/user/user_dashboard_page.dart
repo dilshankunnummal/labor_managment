@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/user/booking_history_page.dart';
 import 'package:labor_managment/user/user_home.dart';
 
@@ -15,10 +14,7 @@ class UserDashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<UserDashboardPage> {
   var _currentIndex = 0;
 
-  final _bodyPages = const <Widget>[
-    UserHome(),
-    BookingHistoryPage()
-  ];
+  final _bodyPages = const <Widget>[UserHome(), BookingHistoryPage()];
 
   final _bottomNavBarItems = [
     const BottomNavigationBarItem(
@@ -31,7 +27,6 @@ class _DashboardPageState extends State<UserDashboardPage> {
       activeIcon: Icon(Icons.history_rounded),
       label: 'Bookings',
     ),
-
   ];
 
   void _onItemClick(int value) {
@@ -45,11 +40,11 @@ class _DashboardPageState extends State<UserDashboardPage> {
     return Scaffold(
       body: _bodyPages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: primaryColor,
         currentIndex: _currentIndex,
         items: _bottomNavBarItems,
         onTap: _onItemClick,
-
+        selectedItemColor: secondaryColor,
       ),
     );
   }
