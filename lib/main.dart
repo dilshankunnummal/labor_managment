@@ -32,9 +32,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/workerHistory',
+      initialRoute: '/workerLogin',
       routes: {
-        '/': (context) => SplashScreen(),
+        // '/': (context) => SplashScreen(),
         '/roleSelection': (context) => RoleSelectionPage(),
         //user
         '/userLogin': (context) => UserLogin(),
