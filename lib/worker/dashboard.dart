@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
+import 'package:labor_managment/worker/worker_history.dart';
 import 'package:labor_managment/worker/worker_home.dart';
 import 'package:labor_managment/worker/worker_profile.dart';
 
@@ -16,6 +17,7 @@ class _DashboardPageState extends State<DashboardPage> {
   final _bodyPages = const <Widget>[
     WorkerHome(),
     WorkerProfile(),
+    WorkerHistory()
   ];
 
   final _bottomNavBarItems = [
