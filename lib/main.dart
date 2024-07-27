@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:labor_managment/admin/admin_login.dart';
 import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/role_selection_page.dart';
 import 'package:labor_managment/splash_screen.dart';
@@ -33,9 +34,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      initialRoute: '/workerLogin',
-
+      initialRoute: '/adminLogin',
       routes: {
         // '/': (context) => SplashScreen(),
         '/roleSelection': (context) => RoleSelectionPage(),
@@ -51,7 +50,9 @@ class _MyAppState extends State<MyApp> {
         '/workerHistory': (context) => WorkerHistory(),
         '/workersList': (context) => Workerslistpage(),
         '/workerProfile': (context) => WorkerProfile(),
-        '/workerdashboard': (context) => DashboardPage()
+        '/workerdashboard': (context) => DashboardPage(),
+        //Admin
+        '/adminLogin': (context) => AdminLoginPage(),
       },
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: ash),
