@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart'; // Import for date formatting
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,11 +13,8 @@ class Workerslistpage extends StatefulWidget {
 
 class _WorkerslistpageState extends State<Workerslistpage> {
   Map? args;
-
-  final CollectionReference workers =
-  FirebaseFirestore.instance.collection('workers');
-  final CollectionReference bookings =
-  FirebaseFirestore.instance.collection('bookings');
+  final CollectionReference workers = FirebaseFirestore.instance.collection('workers');
+  final CollectionReference bookings = FirebaseFirestore.instance.collection('bookings');
   User? currentUser;
 
   @override
@@ -33,11 +31,15 @@ class _WorkerslistpageState extends State<Workerslistpage> {
 
   Future<void> bookWorker(String workerId, String workerName, String jobCategory, String userId, String userName) async {
     try {
+      // Get the current date and format it
+      final DateTime now = DateTime.now();
+      final String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+
       await bookings.add({
         'workerId': workerId,
         'workerName': workerName,
         'jobCategory': jobCategory,
-        'bookingDate': Timestamp.now(),
+        'bookingDate': formattedDate, // Store only the formatted date as a string
         'userId': userId,
         'userName': userName,
       });
@@ -89,8 +91,7 @@ class _WorkerslistpageState extends State<Workerslistpage> {
 
               return Card(
                 color: secondaryColor,
-                margin:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Column(

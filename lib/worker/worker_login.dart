@@ -62,7 +62,7 @@ class _WorkerLoginState extends State<WorkerLogin> {
           print('Signed in successfully.');
           // Navigate to the worker dashboard or home screen
           Navigator.pushNamedAndRemoveUntil(
-              context, '/workerProfile',(route)=> false);
+              context, '/workerHome',(route)=> false);
           _showSnackbar('Signed in successfully., Welcome....');
           _saveAuthCredentialsWorker(true);// Update with your actual route
         } else {
