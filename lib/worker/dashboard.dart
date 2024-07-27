@@ -1,20 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
-import 'package:labor_managment/user/booking_history_page.dart';
-import 'package:labor_managment/user/user_home.dart';
+import 'package:labor_managment/worker/worker_history.dart';
+import 'package:labor_managment/worker/worker_home.dart';
+import 'package:labor_managment/worker/worker_profile.dart';
 
-class UserDashboardPage extends StatefulWidget {
-  const UserDashboardPage({super.key});
+class DashboardPage extends StatefulWidget {
+  const DashboardPage({super.key});
 
   @override
-  State<UserDashboardPage> createState() => _DashboardPageState();
+  State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<UserDashboardPage> {
+class _DashboardPageState extends State<DashboardPage> {
   var _currentIndex = 0;
 
-  final _bodyPages = const <Widget>[UserHome(), BookingHistoryPage()];
+  final _bodyPages = const <Widget>[
+    WorkerHome(),
+    WorkerProfile(),
+    WorkerHistory()
+  ];
 
   final _bottomNavBarItems = [
     const BottomNavigationBarItem(
@@ -23,9 +27,14 @@ class _DashboardPageState extends State<UserDashboardPage> {
       label: 'Home',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.history_rounded),
-      activeIcon: Icon(Icons.history_rounded),
+      icon: Icon(Icons.person_outlined),
+      activeIcon: Icon(Icons.location_on),
       label: 'Bookings',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.person_outlined),
+      activeIcon: Icon(Icons.history),
+      label: 'History',
     ),
   ];
 
@@ -40,11 +49,12 @@ class _DashboardPageState extends State<UserDashboardPage> {
     return Scaffold(
       body: _bodyPages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: primaryColor,
+        backgroundColor: Colors.white,
         currentIndex: _currentIndex,
         items: _bottomNavBarItems,
         onTap: _onItemClick,
         selectedItemColor: secondaryColor,
+        unselectedItemColor: ash,
       ),
     );
   }
