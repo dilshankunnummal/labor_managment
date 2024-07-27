@@ -32,9 +32,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/workerHistory',
+      initialRoute: '/roleSelection',
       routes: {
-        '/': (context) => SplashScreen(),
+        // '/': (context) => SplashScreen(),
         '/roleSelection': (context) => RoleSelectionPage(),
         //user
         '/userLogin': (context) => UserLogin(),
@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
         '/workerRegistration': (context) => WorkerRegistration(),
         '/workerLogin': (context) => WorkerLogin(),
         '/workerHome': (context) => WorkerHome(),
-        '/workerHistory': (context)=>WorkerHistory(),
+        '/workerHistory': (context) => WorkerHistory(),
         '/workersList': (context) => Workerslistpage(),
         '/workerProfile': (context) => WorkerProfile()
       },
