@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isAuthUser) {
       Navigator.pushNamedAndRemoveUntil(context, '/userDashboard', (route)=> false);
     }else if(isAuthWorker){
-      Navigator.pushNamedAndRemoveUntil(context, '/workerProfile', (route)=> false);
+      Navigator.pushNamedAndRemoveUntil(context, '/workerHome', (route)=> false);
     } else {
       Navigator.pushNamedAndRemoveUntil(context, '/roleSelection', (route)=> false);
     }
