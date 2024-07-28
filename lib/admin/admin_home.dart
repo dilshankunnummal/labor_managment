@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:labor_managment/constants/colors.dart';
 
 class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
@@ -10,6 +11,15 @@ class AdminHome extends StatefulWidget {
 class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Home',
+          style: TextStyle(
+              fontSize: 25, color: secondaryColor, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+    );
   }
 }

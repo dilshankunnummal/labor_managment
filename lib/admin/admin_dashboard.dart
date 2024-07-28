@@ -1,56 +1,42 @@
-// import 'package:flutter/material.dart';
-
-// class AdminDashboard extends StatefulWidget {
-//   const AdminDashboard({super.key});
-
-//   @override
-//   State<AdminDashboard> createState() => _AdminDashboardState();
-// }
-
-// class _AdminDashboardState extends State<AdminDashboard> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:labor_managment/admin/admin_home.dart';
+import 'package:labor_managment/admin/staff_management.dart';
+import 'package:labor_managment/admin/user_managment.dart';
 import 'package:labor_managment/constants/colors.dart';
-import 'package:labor_managment/worker/worker_history.dart';
-import 'package:labor_managment/worker/worker_home.dart';
-import 'package:labor_managment/worker/worker_profile.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
 
   @override
-  State<AdminDashboard> createState() => _DashboardPageState();
+  State<AdminDashboard> createState() => _AdminDashboardState();
 }
 
-class _DashboardPageState extends State<AdminDashboard> {
+class _AdminDashboardState extends State<AdminDashboard> {
   var _currentIndex = 0;
 
-  final _bodyPages = const <Widget>[
+  final List<Widget> _bodyPages = const <Widget>[
     AdminHome(),
+    UserManagementPage(),
+    StaffManagementPage()
+    // Add more pages if needed
   ];
 
-  final _bottomNavBarItems = [
+  final List<BottomNavigationBarItem> _bottomNavBarItems = [
     const BottomNavigationBarItem(
-      icon: Icon(Icons.home_outlined),
+      icon: Icon(Icons.home),
       activeIcon: Icon(Icons.home),
       label: 'Home',
     ),
-    // const BottomNavigationBarItem(
-    //   icon: Icon(Icons.person_outlined),
-    //   activeIcon: Icon(Icons.person_outline),
-    //   label: 'Profile',
-    // ),
-    // const BottomNavigationBarItem(
-    //   icon: Icon(Icons.history),
-    //   activeIcon: Icon(Icons.history),
-    //   label: 'History',
-    // ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.person),
+      activeIcon: Icon(Icons.person),
+      label: 'Users',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.work),
+      activeIcon: Icon(Icons.work),
+      label: 'Staff',
+    ),
   ];
 
   void _onItemClick(int value) {
