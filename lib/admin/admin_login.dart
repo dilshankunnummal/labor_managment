@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/widget/button.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminLoginPage extends StatefulWidget {
@@ -14,24 +13,37 @@ class AdminLoginPage extends StatefulWidget {
 
 class _AdminLoginPageState extends State<AdminLoginPage> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  bool isLoading = false;
+  String errorMessage = '';
 
   Future<void> signIn() async {
+    setState(() {
+      isLoading = true;
+      errorMessage = '';
+    });
+
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      SnackBar(content: Text('Login Success'));
-      print('Login successful: ${userCredential.user}');
       _saveAuthCredentialsAdmin(true);
-
       Navigator.pushNamed(context, '/adminDashboard');
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message ?? 'Login failed';
+      });
     } catch (e) {
-      SnackBar(content: Text('Login Failed'));
-      print('Login failed: $e');
+      setState(() {
+        errorMessage = 'An unexpected error occurred. Please try again.';
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -45,134 +57,80 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: _formKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 40),
                   const Text(
-                    'Login As',
+                    'Login As Admin',
                     style: TextStyle(
-                        color: secondaryColor,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const Text(
-                    'Admin',
-                    style: TextStyle(
-                        color: secondaryColor,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  SizedBox(
-                    height: 80,
-                    child: TextFormField(
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      style: const TextStyle(color: ash),
-                      decoration: const InputDecoration(
-                        labelText: 'Enter Email',
-                        labelStyle: TextStyle(color: ash),
-                        prefixIcon: Icon(
-                          Icons.email_outlined,
-                          color: ash,
-                        ),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: ash, width: 2.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: ash, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(90)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: ash, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(90)),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.redAccent, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(90)),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.redAccent, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(90)),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please Enter Email';
-                        }
-                        return null;
-                      },
+                      color: secondaryColor,
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 010),
-                  SizedBox(
-                    height: 80,
-                    child: TextFormField(
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter Password',
-                        labelStyle: TextStyle(color: ash),
-                        prefixIcon: Icon(
-                          Icons.lock_outline,
-                          color: ash,
-                        ),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: ash, width: 2.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(90))),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: ash, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(90)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: ash, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(90)),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.redAccent, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(90)),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.redAccent, width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(90)),
-                        ),
+                  const SizedBox(height: 40),
+                  TextFormField(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Enter Email',
+                      prefixIcon: Icon(Icons.email_outlined, color: ash),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please Enter Password';
-                        }
-                        return null;
-                      },
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter email';
+                      }
+                      return null;
+                    },
                   ),
-                  SizedBox(
-                    height: 32,
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Enter Password',
+                      prefixIcon: Icon(Icons.lock_outline, color: ash),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter password';
+                      }
+                      return null;
+                    },
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              signIn();
-                            }
-                          },
-                          buttonText: 'Login'),
-                    ],
-                  )
+                  const SizedBox(height: 20),
+                  if (errorMessage.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        errorMessage,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  if (isLoading)
+                    const Center(child: CircularProgressIndicator())
+                  else
+                    Center(
+                      child: CustomElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            signIn();
+                          }
+                        },
+                        buttonText: 'Login',
+                      ),
+                    ),
                 ],
               ),
             ),

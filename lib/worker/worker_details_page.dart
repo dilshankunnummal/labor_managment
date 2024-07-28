@@ -2,14 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/model/worker_model.dart';
-
-const Color primaryColor = Colors.white;
-const Color secondaryColor = Color.fromARGB(15, 44, 105, 94);
-const Color black = Colors.black;
-const Color buttonColor = Color(0xFF087F8F);
-const Color ash = Color(0xFF787171);
-const Color blue = Colors.lightBlue;
 
 class WorkerList extends StatefulWidget {
   final String jobType;

@@ -15,7 +15,6 @@ import 'package:labor_managment/user/user_registration.dart';
 import 'package:labor_managment/user/workers_list_page.dart';
 import 'package:labor_managment/worker/dashboard.dart';
 import 'package:labor_managment/worker/edit_worker_page.dart';
-import 'package:labor_managment/worker/worker_history.dart';
 import 'package:labor_managment/worker/worker_home.dart';
 import 'package:labor_managment/worker/worker_login.dart';
 import 'package:labor_managment/worker/worker_profile.dart';
@@ -39,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/roleSelection',
+      initialRoute: '/adminLogin',
       routes: {
         // '/': (context) => SplashScreen(),
         '/roleSelection': (context) => RoleSelectionPage(),
@@ -52,7 +51,6 @@ class _MyAppState extends State<MyApp> {
         '/workerRegistration': (context) => WorkerRegistration(),
         '/workerLogin': (context) => WorkerLogin(),
         '/workerHome': (context) => WorkerHome(),
-        '/workerHistory': (context) => WorkerHistory(),
         '/workersList': (context) => Workerslistpage(),
         '/workerProfile': (context) => WorkerProfile(),
         '/workerdashboard': (context) => DashboardPage(),
