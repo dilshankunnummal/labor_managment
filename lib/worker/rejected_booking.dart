@@ -4,22 +4,18 @@ import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:labor_managment/constants/colors.dart';
 
-class WorkerHome extends StatefulWidget {
-  const WorkerHome({super.key});
+class RejectedBookings extends StatefulWidget {
+  const RejectedBookings({super.key});
 
   @override
-  State<WorkerHome> createState() => _WorkerHomeState();
+  _RejectedBookingsState createState() => _RejectedBookingsState();
 }
 
-class _WorkerHomeState extends State<WorkerHome> {
+class _RejectedBookingsState extends State<RejectedBookings> {
   final CollectionReference bookings =
       FirebaseFirestore.instance.collection('bookings');
   final CollectionReference users =
       FirebaseFirestore.instance.collection('users');
-  final CollectionReference acceptedBookings =
-      FirebaseFirestore.instance.collection('acceptedBookings');
-  final CollectionReference rejectedBookings =
-      FirebaseFirestore.instance.collection('rejectedBookings');
 
   User? currentUser;
 
@@ -54,7 +50,7 @@ class _WorkerHomeState extends State<WorkerHome> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Worker Home',
+          'Rejected Bookings',
           style: TextStyle(
               color: secondaryColor, fontSize: 25, fontWeight: FontWeight.bold),
         ),
@@ -65,6 +61,7 @@ class _WorkerHomeState extends State<WorkerHome> {
           : StreamBuilder(
               stream: bookings
                   .where('workerId', isEqualTo: currentUser!.uid)
+                  .where('status', isEqualTo: 'Rejected')
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -76,16 +73,11 @@ class _WorkerHomeState extends State<WorkerHome> {
                 }
 
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text('No bookings available'));
+                  return const Center(
+                      child: Text('No rejected bookings available'));
                 }
 
-                final List<DocumentSnapshot> docs =
-                    snapshot.data!.docs.where((doc) {
-                  final data = doc.data() as Map<String, dynamic>;
-                  return !data.containsKey('status') ||
-                      data['status'] != 'Accepted' &&
-                          data['status'] != 'Rejected';
-                }).toList();
+                final List<DocumentSnapshot> docs = snapshot.data!.docs;
 
                 return ListView.builder(
                   itemCount: docs.length,
@@ -138,72 +130,37 @@ class _WorkerHomeState extends State<WorkerHome> {
                                 const SizedBox(height: 5),
                                 Text(
                                   'Address: $userAddress',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
+                                  style: TextStyle(fontSize: 16),
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
                                   'Phone: $userPhone',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
+                                  style: TextStyle(fontSize: 16),
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
                                   'Booking Date: $bookingDate',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
+                                  style: TextStyle(fontSize: 16),
                                 ),
                                 const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        _acceptBooking(
-                                            bookingSnap.id, bookingData);
-                                      },
-                                      child: Text(
-                                        'Accept',
-                                        style: TextStyle(
-                                            color: primaryColor,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: buttonColor,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 40, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                        ),
-                                      ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _clearBooking(bookingSnap.id);
+                                  },
+                                  child: Text(
+                                    'Clear',
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 40, vertical: 10),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
                                     ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        _rejectBooking(
-                                            bookingSnap.id, bookingData);
-                                      },
-                                      child: Text(
-                                        'Reject',
-                                        style: TextStyle(
-                                            color: primaryColor,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.red,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 40, vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -218,33 +175,12 @@ class _WorkerHomeState extends State<WorkerHome> {
     );
   }
 
-  void _acceptBooking(
-      String bookingId, Map<String, dynamic> bookingData) async {
+  void _clearBooking(String bookingId) async {
     try {
-      // Update the status of the booking to "Accepted"
-      await bookings.doc(bookingId).update({'status': 'Accepted'});
-
-      // Add the booking data to the acceptedBookings collection
-      await acceptedBookings.add(bookingData);
-
-      print('Booking accepted and added to acceptedBookings collection.');
+      await bookings.doc(bookingId).delete();
+      print('Rejected booking cleared and removed from collection.');
     } catch (e) {
-      print('Error accepting booking: $e');
-    }
-  }
-
-  void _rejectBooking(
-      String bookingId, Map<String, dynamic> bookingData) async {
-    try {
-      // Update the status of the booking to "Rejected"
-      await bookings.doc(bookingId).update({'status': 'Rejected'});
-
-      // Add the booking data to the rejectedBookings collection
-      await rejectedBookings.add(bookingData);
-
-      print('Booking rejected and added to rejectedBookings collection.');
-    } catch (e) {
-      print('Error rejecting booking: $e');
+      print('Error deleting booking: $e');
     }
   }
 }

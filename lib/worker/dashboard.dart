@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
-import 'package:labor_managment/worker/worker_history.dart';
+import 'package:labor_managment/worker/accepted_booking.dart';
+import 'package:labor_managment/worker/rejected_booking.dart';
 import 'package:labor_managment/worker/worker_home.dart';
 import 'package:labor_managment/worker/worker_profile.dart';
 
@@ -17,7 +18,8 @@ class _DashboardPageState extends State<DashboardPage> {
   final _bodyPages = const <Widget>[
     WorkerHome(),
     WorkerProfile(),
-    WorkerHistory()
+    RejectedBookings(),
+    AcceptedBookings()
   ];
 
   final _bottomNavBarItems = [
@@ -32,9 +34,14 @@ class _DashboardPageState extends State<DashboardPage> {
       label: 'Profile',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.history),
-      activeIcon: Icon(Icons.history),
-      label: 'History',
+      icon: Icon(Icons.cancel_outlined),
+      activeIcon: Icon(Icons.cancel_outlined),
+      label: 'Rejected',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.done_all),
+      activeIcon: Icon(Icons.done_all),
+      label: 'Accepted',
     ),
   ];
 
