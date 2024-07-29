@@ -14,7 +14,7 @@ class _AdminHomeState extends State<AdminHome> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Home',
+          'Homeee',
           style: TextStyle(
               fontSize: 25, color: secondaryColor, fontWeight: FontWeight.bold),
         ),
