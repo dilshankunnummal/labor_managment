@@ -17,9 +17,10 @@ class _DashboardPageState extends State<DashboardPage> {
 
   final _bodyPages = const <Widget>[
     WorkerHome(),
-    WorkerProfile(),
+
     RejectedBookings(),
-    AcceptedBookings()
+    AcceptedBookings(),
+    WorkerProfile(),
   ];
 
   final _bottomNavBarItems = [
@@ -28,11 +29,7 @@ class _DashboardPageState extends State<DashboardPage> {
       activeIcon: Icon(Icons.home),
       label: 'Home',
     ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.person_outlined),
-      activeIcon: Icon(Icons.person_outline),
-      label: 'Profile',
-    ),
+
     const BottomNavigationBarItem(
       icon: Icon(Icons.cancel_outlined),
       activeIcon: Icon(Icons.cancel_outlined),
@@ -42,6 +39,11 @@ class _DashboardPageState extends State<DashboardPage> {
       icon: Icon(Icons.done_all),
       activeIcon: Icon(Icons.done_all),
       label: 'Accepted',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.person_outlined),
+      activeIcon: Icon(Icons.person_outline),
+      label: 'Profile',
     ),
   ];
 

@@ -14,7 +14,7 @@ class UserDashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<UserDashboardPage> {
   var _currentIndex = 0;
 
-  final _bodyPages = const <Widget>[UserHome(), BookingHistoryPage()];
+  final _bodyPages = const <Widget>[UserHome(), BookingHistoryPage(),];
 
   final _bottomNavBarItems = [
     const BottomNavigationBarItem(
@@ -26,6 +26,11 @@ class _DashboardPageState extends State<UserDashboardPage> {
       icon: Icon(Icons.history_rounded),
       activeIcon: Icon(Icons.history_rounded),
       label: 'Bookings',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.percent_rounded),
+      activeIcon: Icon(Icons.percent_rounded),
+      label: 'Profile',
     ),
   ];
 

@@ -166,6 +166,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:labor_managment/constants/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WorkerProfile extends StatefulWidget {
   const WorkerProfile({Key? key}) : super(key: key);
@@ -215,15 +216,68 @@ class _WorkerProfileState extends State<WorkerProfile> {
     fetchWorkerDetails();
   }
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Cancel',
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Logout'),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/roleSelection', (route) => false);
+                logout();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> logout() async {
+    _auth.signOut();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('isAuthWorker');
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchUserDetails();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Worker Profile',
+          'Profile',
           style: TextStyle(
               fontWeight: FontWeight.bold, color: secondaryColor, fontSize: 25),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                _showLogoutDialog();
+              },
+              icon: Icon(
+                Icons.logout_rounded,
+              ))
+        ],
         centerTitle: true,
         backgroundColor: primaryColor,
       ),
