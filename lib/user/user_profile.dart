@@ -72,7 +72,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(
-                    context, '/login', (route) => false);
+                    context, '/roleSelection', (route) => false);
                 logout();
               },
             ),

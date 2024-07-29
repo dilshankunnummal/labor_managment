@@ -9,6 +9,7 @@ import 'package:labor_managment/constants/colors.dart';
 import 'package:labor_managment/role_selection_page.dart';
 import 'package:labor_managment/splash_screen.dart';
 import 'package:labor_managment/user/user_dashboard_page.dart';
+import 'package:labor_managment/user/user_edit_profile.dart';
 import 'package:labor_managment/user/user_home.dart';
 import 'package:labor_managment/user/user_login.dart';
 import 'package:labor_managment/user/user_registration.dart';
@@ -47,6 +48,7 @@ class _MyAppState extends State<MyApp> {
         '/userRegistration': (context) => UserRegistration(),
         '/userHome': (context) => UserHome(),
         '/userDashboard': (context) => UserDashboardPage(),
+        '/userEditProfile': (context)=> UserEditProfile(),
         //worker
         '/workerRegistration': (context) => WorkerRegistration(),
         '/workerLogin': (context) => WorkerLogin(),

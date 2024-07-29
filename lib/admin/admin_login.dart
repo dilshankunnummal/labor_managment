@@ -31,7 +31,8 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         password: passwordController.text.trim(),
       );
       _saveAuthCredentialsAdmin(true);
-      Navigator.pushNamed(context, '/adminDashboard');
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/adminDashboard', (route) => false);
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message ?? 'Login failed';
